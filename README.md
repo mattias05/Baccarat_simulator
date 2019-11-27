@@ -1,7 +1,11 @@
 # Baccarat
-Baccarat game Punto Banco variant in python. Small first personal project.  
+Cloned project from https://github.com/rjsilvestre/baccarat
+Baccarat game Punto Banco variant in python.
 The game supports multiple players and tries to emulate a casino baccarat table.  
 The simulation supports cli arguments and outputs a number simulated baccarat shoes to a text file.
+
+### Changes from original project
+Added jackpot rules.
 
 ### How to run
 #### Baccarat game cli
