@@ -18,6 +18,7 @@ class Game:
         banco_cards: str, cards of banco hand.
         num_decks: int, current number of decks in the shoe.
     """
+
     def __init__(self, num_decks=8):
         self._game_running = False
         self._players = []
@@ -183,6 +184,37 @@ class Game:
         if self._game_running:
             raise GameError('Game is running.')
 
+        # Pareggio stesso colore (side7)
+
+        # 6 carte (side3)
+        if len(self._punto.cards) == 3 and len(self._banco.cards) == 3:
+            # 6 carte stesso colore (side6)
+            if self._punto.cards[0].suit in ['spades', 'clubs'] \
+                    and self._punto.cards[1].suit in ['spades', 'clubs'] \
+                    and self._punto.cards[2].suit in ['spades', 'clubs'] \
+                    and self._banco.cards[0].suit in ['spades', 'clubs'] \
+                    and self._banco.cards[1].suit in ['spades', 'clubs'] \
+                    and self._banco.cards[2].suit in ['spades', 'clubs'] \
+                    or self._punto.cards[0].suit in ['diamonds', 'hearts'] \
+                    and self._punto.cards[1].suit in ['diamonds', 'hearts'] \
+                    and self._punto.cards[2].suit in ['diamonds', 'hearts'] \
+                    and self._banco.cards[0].suit in ['diamonds', 'hearts'] \
+                    and self._banco.cards[1].suit in ['diamonds', 'hearts'] \
+                    and self._banco.cards[2].suit in ['diamonds', 'hearts']:
+                # 6 carte stesso seme (side5)
+                if self._punto.cards[0].suit == self._punto.cards[1].suit == self._punto.cards[2].suit \
+                        == self._banco.cards[0].suit == self._banco.cards[1].suit \
+                        == self._banco.cards[0].suit:
+                    return ['side6', 'side5', 'side3']
+                return ['side6', 'side3']
+            return 'side3'
+
+        # 6 figure (side4)
+        if len(self._punto.cards) == 3 and len(self._banco.cards) == 3 \
+                and self._punto.cards in ['jack', 'queen', 'king'] and \
+                self._banco.cards in ['jack', 'queen', 'king']:
+            return 'side4'
+
         # punto draws 3rd card with value 8 and banco cards 1 and 2 sum to 3
         if len(self._punto.cards) == 3 and self._punto.cards[2].rank == 8 \
                 and self._banco.cards[0] + self._banco.cards[1] == 3:
@@ -244,6 +276,7 @@ class Table(Game):
         valid_bets: list, with the indexes of the players that currently have a
             valid bet on the table.
     """
+
     def __init__(self, num_decks=8):
         self._bets_open = True
         Game.__init__(self, num_decks)
