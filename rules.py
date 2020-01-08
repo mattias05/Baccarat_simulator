@@ -173,6 +173,11 @@ class Game:
         self._game_running = False
         return third_draws
 
+    # ---------------------------------------------
+    # CANT RETURN LISTS IN THE JACKPOT FUNCTIONS
+    # create a function per every bet and side bet
+    # ---------------------------------------------
+
     def jackpot_result(self):
         """Check jackpot sequence.
 
@@ -208,13 +213,19 @@ class Game:
                     return ['side6', 'side5', 'side3']
                 return ['side6', 'side3']
             return 'side3'
+        else:
+            return 'no'
 
+    def jackpot_result4(self):
         # 6 figure (side4)
         if len(self._punto.cards) == 3 and len(self._banco.cards) == 3 \
                 and self._punto.cards in ['jack', 'queen', 'king'] and \
                 self._banco.cards in ['jack', 'queen', 'king']:
             return 'side4'
+        else:
+            return 'no'
 
+    def jackpot_result012m(self):
         # punto draws 3rd card with value 8 and banco cards 1 and 2 sum to 3
         if len(self._punto.cards) == 3 and self._punto.cards[2].rank == 8 \
                 and self._banco.cards[0] + self._banco.cards[1] == 3:
