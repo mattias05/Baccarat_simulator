@@ -221,20 +221,20 @@ class Game:
             # if all the cards on the table have the same suit
             if self._punto.cards[0].suit == self._punto.cards[1].suit == self._punto.cards[2].suit \
                     == self._banco.cards[0].suit == self._banco.cards[1].suit:
-                return 'main'
+                return ['main', 'side1', 'side2']
             # if all the cards on the table have the same color
             elif self._punto.cards[0].suit in ['spades', 'clubs'] \
                     and self._punto.cards[1].suit in ['spades', 'clubs'] \
                     and self._punto.cards[2].suit in ['spades', 'clubs'] \
                     and self._banco.cards[0].suit in ['spades', 'clubs'] \
                     and self._banco.cards[1].suit in ['spades', 'clubs']:
-                return 'side1'
+                return ['side1', 'side2']
             elif self._punto.cards[0].suit in ['diamonds', 'hearts'] \
                     and self._punto.cards[1].suit in ['diamonds', 'hearts'] \
                     and self._punto.cards[2].suit in ['diamonds', 'hearts'] \
                     and self._banco.cards[0].suit in ['diamonds', 'hearts'] \
                     and self._banco.cards[1].suit in ['diamonds', 'hearts']:
-                return 'side1'
+                return ['side1', 'side2']
             # no condition on the suits
             return 'side2'
         else:
