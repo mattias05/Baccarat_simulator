@@ -178,20 +178,75 @@ class Game:
     # create a function per every bet and side bet
     # ---------------------------------------------
 
-    def jackpot_result(self):
-        """Check jackpot sequence.
+    # main jackpot
+    def main_jackpot(self):
+        # if punto draws 3rd card with value 8 and banco cards 1 and 2 sum to 3
+        # and all the cards have the same suit
+        if len(self._punto.cards) == 3 and self._punto.cards[2].rank == 8 \
+                and self._banco.cards[0] + self._banco.cards[1] == 3 \
+                and self._punto.cards[0].suit == self._punto.cards[1].suit == self._punto.cards[2].suit \
+                == self._banco.cards[0].suit == self._banco.cards[1].suit:
+            return 'main'
+        return
 
-        Raises:
-            GameError: If the game is still running.
+    # side1
+    def side_jackpot_1(self):
+        # if punto draws 3rd card with value 8 and banco cards 1 and 2 sum to 3
+        if len(self._punto.cards) == 3 and self._punto.cards[2].rank == 8 \
+                and self._banco.cards[0] + self._banco.cards[1] == 3:
+            if self._punto.cards[0].suit in ['spades', 'clubs'] \
+                    and self._punto.cards[1].suit in ['spades', 'clubs'] \
+                    and self._punto.cards[2].suit in ['spades', 'clubs'] \
+                    and self._banco.cards[0].suit in ['spades', 'clubs'] \
+                    and self._banco.cards[1].suit in ['spades', 'clubs']:
+                return 'side1'
+            elif self._punto.cards[0].suit in ['diamonds', 'hearts'] \
+                    and self._punto.cards[1].suit in ['diamonds', 'hearts'] \
+                    and self._punto.cards[2].suit in ['diamonds', 'hearts'] \
+                    and self._banco.cards[0].suit in ['diamonds', 'hearts'] \
+                    and self._banco.cards[1].suit in ['diamonds', 'hearts']:
+                return 'side1'
+            return
+        return
 
-        Returns: JACKPOT!!! str = {'no', 'main', 'side1', 'side2', ...}
-        """
-        if self._game_running:
-            raise GameError('Game is running.')
+    # side2
+    def side_jackpot_2(self):
+        # if punto draws 3rd card with value 8 and banco cards 1 and 2 sum to 3
+        if len(self._punto.cards) == 3 and self._punto.cards[2].rank == 8 \
+                and self._banco.cards[0] + self._banco.cards[1] == 3:
+            return 'side2'
+        return
 
-        # Pareggio stesso colore (side7)
+    # side3
+    def side_jackpot_3(self):
+        # 6 carte
+        if len(self._punto.cards) == 3 and len(self._banco.cards) == 3:
+            return 'side3'
+        return
 
-        # 6 carte (side3)
+    # side4
+    def side_jackpot_4(self):
+        # 6 figure
+        if len(self._punto.cards) == 3 and len(self._banco.cards) == 3 \
+                and self._punto.cards in ['jack', 'queen', 'king'] \
+                and self._banco.cards in ['jack', 'queen', 'king']:
+            return 'side4'
+        return
+
+    # side5
+    def side_jackpot_5(self):
+        # 6 carte stesso seme
+        if len(self._punto.cards) == 3 and len(self._banco.cards) == 3:
+            if self._punto.cards[0].suit == self._punto.cards[1].suit == self._punto.cards[2].suit \
+                    == self._banco.cards[0].suit == self._banco.cards[1].suit \
+                    == self._banco.cards[0].suit:
+                return 'side5'
+            return
+        return
+
+    # side6
+    def side_jackpot_6(self):
+        # 6 carte stesso colore (side6)
         if len(self._punto.cards) == 3 and len(self._banco.cards) == 3:
             # 6 carte stesso colore (side6)
             if self._punto.cards[0].suit in ['spades', 'clubs'] \
@@ -206,50 +261,12 @@ class Game:
                     and self._banco.cards[0].suit in ['diamonds', 'hearts'] \
                     and self._banco.cards[1].suit in ['diamonds', 'hearts'] \
                     and self._banco.cards[2].suit in ['diamonds', 'hearts']:
-                # 6 carte stesso seme (side5)
-                if self._punto.cards[0].suit == self._punto.cards[1].suit == self._punto.cards[2].suit \
-                        == self._banco.cards[0].suit == self._banco.cards[1].suit \
-                        == self._banco.cards[0].suit:
-                    return ['side6', 'side5', 'side3']
-                return ['side6', 'side3']
-            return 'side3'
-        else:
-            return 'no'
+                return 'side6'
+            return
+        return
 
-    def jackpot_result4(self):
-        # 6 figure (side4)
-        if len(self._punto.cards) == 3 and len(self._banco.cards) == 3 \
-                and self._punto.cards in ['jack', 'queen', 'king'] and \
-                self._banco.cards in ['jack', 'queen', 'king']:
-            return 'side4'
-        else:
-            return 'no'
-
-    def jackpot_result012m(self):
-        # punto draws 3rd card with value 8 and banco cards 1 and 2 sum to 3
-        if len(self._punto.cards) == 3 and self._punto.cards[2].rank == 8 \
-                and self._banco.cards[0] + self._banco.cards[1] == 3:
-            # if all the cards on the table have the same suit
-            if self._punto.cards[0].suit == self._punto.cards[1].suit == self._punto.cards[2].suit \
-                    == self._banco.cards[0].suit == self._banco.cards[1].suit:
-                return ['main', 'side1', 'side2']
-            # if all the cards on the table have the same color
-            elif self._punto.cards[0].suit in ['spades', 'clubs'] \
-                    and self._punto.cards[1].suit in ['spades', 'clubs'] \
-                    and self._punto.cards[2].suit in ['spades', 'clubs'] \
-                    and self._banco.cards[0].suit in ['spades', 'clubs'] \
-                    and self._banco.cards[1].suit in ['spades', 'clubs']:
-                return ['side1', 'side2']
-            elif self._punto.cards[0].suit in ['diamonds', 'hearts'] \
-                    and self._punto.cards[1].suit in ['diamonds', 'hearts'] \
-                    and self._punto.cards[2].suit in ['diamonds', 'hearts'] \
-                    and self._banco.cards[0].suit in ['diamonds', 'hearts'] \
-                    and self._banco.cards[1].suit in ['diamonds', 'hearts']:
-                return ['side1', 'side2']
-            # no condition on the suits
-            return 'side2'
-        else:
-            return 'no'
+    # side7 (Pareggio stesso colore)
+    ## TODO ##
 
     def game_result(self):
         """Checks what is the result of the game.
