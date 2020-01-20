@@ -77,7 +77,11 @@ def main():
                 shoe_wins[game_result] += 1
                 total_wins[game_result] += 1
                 for j in jackpots:
-                    jackpot_wins[j] += 1
+                    print(j)
+                    # TODO #
+                    # fix where grouping results... you can't sum None
+                    # basically find a way to deal with None!!!
+                    #jackpot_wins[j] += 1
 
                 # Append to results list
                 result.append(game_result.title()[0])
