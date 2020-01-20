@@ -178,10 +178,8 @@ class Game:
     # create a function per every bet and side bet
     # ---------------------------------------------
 
-    # main jackpot
+    # main jackpot - same as side2 + all the cards have the same suit
     def main_jackpot(self):
-        # if punto draws 3rd card with value 8 and banco cards 1 and 2 sum to 3
-        # and all the cards have the same suit
         if len(self._punto.cards) == 3 and self._punto.cards[2].rank == 8 \
                 and self._banco.cards[0] + self._banco.cards[1] == 3 \
                 and self._punto.cards[0].suit == self._punto.cards[1].suit == self._punto.cards[2].suit \
@@ -189,9 +187,8 @@ class Game:
             return 'main'
         return
 
-    # side1
+    # side1 - same as side 2 + all the cards have the same color
     def side_jackpot_1(self):
-        # if punto draws 3rd card with value 8 and banco cards 1 and 2 sum to 3
         if len(self._punto.cards) == 3 and self._punto.cards[2].rank == 8 \
                 and self._banco.cards[0] + self._banco.cards[1] == 3:
             if self._punto.cards[0].suit in ['spades', 'clubs'] \
@@ -209,33 +206,34 @@ class Game:
             return
         return
 
-    # side2
+    # side2 - punto draws 3rd card with value 8 and banco cards 1 and 2 sum to 3
     def side_jackpot_2(self):
-        # if punto draws 3rd card with value 8 and banco cards 1 and 2 sum to 3
         if len(self._punto.cards) == 3 and self._punto.cards[2].rank == 8 \
                 and self._banco.cards[0] + self._banco.cards[1] == 3:
             return 'side2'
         return
 
-    # side3
+    # side3 - 6 carte
     def side_jackpot_3(self):
-        # 6 carte
         if len(self._punto.cards) == 3 and len(self._banco.cards) == 3:
             return 'side3'
         return
 
-    # side4
+    # side4 - 6 figure
     def side_jackpot_4(self):
-        # 6 figure
-        if len(self._punto.cards) == 3 and len(self._banco.cards) == 3 \
-                and self._punto.cards in ['jack', 'queen', 'king'] \
-                and self._banco.cards in ['jack', 'queen', 'king']:
-            return 'side4'
+        if len(self._punto.cards) == 3 and len(self._banco.cards) == 3:
+            if self._punto.cards[0].rank in ['jack', 'queen', 'king'] \
+                    and self._punto.cards[1].rank in ['jack', 'queen', 'king'] \
+                    and self._punto.cards[2].rank in ['jack', 'queen', 'king'] \
+                    and self._banco.cards[0].rank in ['jack', 'queen', 'king'] \
+                    and self._banco.cards[1].rank in ['jack', 'queen', 'king'] \
+                    and self._punto.cards[2].rank in ['jack', 'queen', 'king']:
+                return 'side4'
+            return
         return
 
-    # side5
+    # side5 - 6 carte stesso seme
     def side_jackpot_5(self):
-        # 6 carte stesso seme
         if len(self._punto.cards) == 3 and len(self._banco.cards) == 3:
             if self._punto.cards[0].suit == self._punto.cards[1].suit == self._punto.cards[2].suit \
                     == self._banco.cards[0].suit == self._banco.cards[1].suit \
@@ -244,11 +242,9 @@ class Game:
             return
         return
 
-    # side6
+    # side6 - 6 carte stesso colore
     def side_jackpot_6(self):
-        # 6 carte stesso colore (side6)
         if len(self._punto.cards) == 3 and len(self._banco.cards) == 3:
-            # 6 carte stesso colore (side6)
             if self._punto.cards[0].suit in ['spades', 'clubs'] \
                     and self._punto.cards[1].suit in ['spades', 'clubs'] \
                     and self._punto.cards[2].suit in ['spades', 'clubs'] \

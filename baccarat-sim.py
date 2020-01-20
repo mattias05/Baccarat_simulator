@@ -26,7 +26,7 @@ def main():
 
     # Argument parser
     parser = argparse.ArgumentParser(description='Simulates baccarat games to a text file.')
-    parser.add_argument('-s', action='store', dest='shoes', default=100,
+    parser.add_argument('-s', action='store', dest='shoes', default=1000,
                         type=int, help='number of shoes to be simulated, default 10000')
     parser.add_argument('-d', action='store', dest='decks', default=8,
                         type=int, help='number of decks per shoe, default 8')
@@ -76,12 +76,12 @@ def main():
 
                 shoe_wins[game_result] += 1
                 total_wins[game_result] += 1
-                for j in jackpots:
-                    print(j)
+                for jpt in jackpots:
+                    if jpt is not None:
+                        jackpot_wins[jpt] += 1
                     # TODO #
                     # fix where grouping results... you can't sum None
                     # basically find a way to deal with None!!!
-                    #jackpot_wins[j] += 1
 
                 # Append to results list
                 result.append(game_result.title()[0])
@@ -101,25 +101,25 @@ def main():
                 sim_file.write(f'{win.title()}:\t{shoe_wins[win]}\n')
             sim.create_shoe(args.decks)
 
-    # Total results
-    print(total_wins)
+        # Total results
+        print(total_wins)
 
-    sim_file.write('\nTotal results:\n')
-    for win in total_wins:
-        sim_file.write(f'{win.title()}:\t{total_wins[win]}\t\
-            ({round((total_wins[win]/game_count) * 100, 4)}%)\n')
+        sim_file.write('\nTotal results:\n')
+        for win in total_wins:
+            sim_file.write(f'{win.title()}:\t{total_wins[win]}\t\
+                ({round((total_wins[win]/game_count) * 100, 4)}%)\n')
 
-    # Jackpot results
-    print(jackpot_wins)
-    pct_main = round((jackpot_wins['main'] / game_count) * 100, 4)
-    pct_side1 = round((jackpot_wins['side1'] / game_count) * 100, 4)
-    print('#games:', game_count, '%main:', pct_main,
-          'odds:', round(pct_main/(1-pct_main),4), '%side1:', pct_side1)
+        # Jackpot results
+        print(jackpot_wins)
+        '''pct_main = round((jackpot_wins['main'] / game_count) * 100, 4)
+        pct_side1 = round((jackpot_wins['side1'] / game_count) * 100, 4)
+        print('#games:', game_count, '%main:', pct_main,
+              'odds:', round(pct_main/(1-pct_main),4), '%side1:', pct_side1)'''
 
-    sim_file.write('\nJackpot results:\n')
-    for jpt in jackpot_wins:
-        sim_file.write(f'{jpt.title()}:\t{jackpot_wins[jpt]}\t\
-        ({round((jackpot_wins[jpt] / game_count) * 100, 4)}%)\n')
+        sim_file.write('\nJackpot results:\n')
+        for jpt in jackpot_wins:
+            sim_file.write(f'{jpt.title()}:\t{jackpot_wins[jpt]}\t\
+            ({round((jackpot_wins[jpt] / game_count) * 100, 4)}%)\n')
 
 
 if __name__ == '__main__':
