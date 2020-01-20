@@ -261,8 +261,54 @@ class Game:
             return
         return
 
-    # side7 (Pareggio stesso colore)
-    ## TODO ##
+    # side7 - Pareggio stesso colore
+    def side_jackpot_7(self):
+        if self.game_result() == 'tie':
+            if self._punto.cards[0].suit in ['spades', 'clubs'] \
+                    and self._punto.cards[1].suit in ['spades', 'clubs'] \
+                    and self._banco.cards[0].suit in ['spades', 'clubs'] \
+                    and self._banco.cards[1].suit in ['spades', 'clubs']:
+                # se punto e banco hanno 2 carte
+                if len(self._punto.cards) == 2 and len(self._banco.cards) == 2:
+                    return 'side7'
+                # se punto e banco hanno 3 carte
+                elif len(self._punto.cards) == 3 and len(self._banco.cards) == 3:
+                    if self._punto.cards[2].suit in ['spades', 'clubs'] \
+                            and self._banco.cards[2].suit in ['spades', 'clubs']:
+                        return 'side7'
+                # se uno tra punto e banco ha 3 carte
+                elif len(self._punto.cards) == 3 or len(self._banco.cards) == 3:
+                    if len(self._punto.cards) == 3:
+                        if self._punto.cards[2].suit in ['spades', 'clubs']:
+                            return 'side7'
+                    elif len(self._banco.cards) == 3:
+                        if self._banco.cards[2].suit in ['spades', 'clubs']:
+                            return 'side7'
+            elif self._punto.cards[0].suit in ['diamonds', 'hearts'] \
+                    and self._punto.cards[1].suit in ['diamonds', 'hearts'] \
+                    and self._banco.cards[0].suit in ['diamonds', 'hearts'] \
+                    and self._banco.cards[1].suit in ['diamonds', 'hearts']:
+                # se punto e banco hanno 2 carte
+                if len(self._punto.cards) == 2 and len(self._banco.cards) == 2:
+                    return 'side7'
+                # se punto e banco hanno 3 carte
+                elif len(self._punto.cards) == 3 and len(self._banco.cards) == 3:
+                    if self._punto.cards[2].suit in ['diamonds', 'hearts'] \
+                            and self._banco.cards[2].suit in ['diamonds', 'hearts']:
+                        return 'side7'
+                # se uno tra punto e banco ha 3 carte
+                elif len(self._punto.cards) == 3 or len(self._banco.cards) == 3:
+                    if len(self._punto.cards) == 3:
+                        if self._punto.cards[2].suit in ['diamonds', 'hearts']:
+                            return 'side7'
+                    elif len(self._banco.cards) == 3:
+                        if self._banco.cards[2].suit in ['diamonds', 'hearts']:
+                            return 'side7'
+                        return
+                    return
+                return
+            return
+        return
 
     def game_result(self):
         """Checks what is the result of the game.

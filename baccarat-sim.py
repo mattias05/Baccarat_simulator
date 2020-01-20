@@ -71,6 +71,7 @@ def main():
                 jackpots.append(sim.side_jackpot_4())
                 jackpots.append(sim.side_jackpot_5())
                 jackpots.append(sim.side_jackpot_6())
+                jackpots.append(sim.side_jackpot_7())
 
                 #print(jackpot_results)
 
