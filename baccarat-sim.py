@@ -20,9 +20,9 @@ def main():
     shoe_count = 0
     game_count = 0
     total_wins = {'banco': 0, 'punto': 0, 'tie': 0}
-    jackpot_wins2 = {'no': 0, 'main': 0, 'side1': 0, 'side2': 0}
-    jackpot_wins1 = {'no': 0, 'side4': 0}
-    jackpot_wins = {'no': 0, 'side3': 0, 'side5': 0, 'side6': 0, 'side7': 0}
+
+    jackpot_wins = {'main': 0, 'side1': 0, 'side2': 0, 'side3': 0,
+                    'side4': 0, 'side5': 0, 'side6': 0, 'side7': 0}
 
     # Argument parser
     parser = argparse.ArgumentParser(description='Simulates baccarat games to a text file.')
@@ -59,21 +59,25 @@ def main():
                 if not sim.is_natural():
                     sim.draw_thirds()
                 game_result = sim.game_result()
+
                 #print('punto values', sim.punto_values)
                 #print('banco values', sim.banco_values)
-                jackpot_results = sim.jackpot_result()
-                jackpot_results1 = sim.jackpot_result4()
-                jackpot_results2 = sim.jackpot_result012m()
 
-                print(jackpot_results)
-                print(jackpot_results1)
-                print(jackpot_results2)
+                jackpots = []
+                jackpots.append(sim.main_jackpot())
+                jackpots.append(sim.side_jackpot_1())
+                jackpots.append(sim.side_jackpot_2())
+                jackpots.append(sim.side_jackpot_3())
+                jackpots.append(sim.side_jackpot_4())
+                jackpots.append(sim.side_jackpot_5())
+                jackpots.append(sim.side_jackpot_6())
+
+                #print(jackpot_results)
 
                 shoe_wins[game_result] += 1
                 total_wins[game_result] += 1
-                jackpot_wins[jackpot_results] += 1
-                jackpot_wins1[jackpot_results1] += 1
-                jackpot_wins2[jackpot_results2] += 1
+                for j in jackpots:
+                    jackpot_wins[j] += 1
 
                 # Append to results list
                 result.append(game_result.title()[0])
@@ -103,8 +107,6 @@ def main():
 
     # Jackpot results
     print(jackpot_wins)
-    print(jackpot_wins1)
-    print(jackpot_wins2)
     pct_main = round((jackpot_wins['main'] / game_count) * 100, 4)
     pct_side1 = round((jackpot_wins['side1'] / game_count) * 100, 4)
     print('#games:', game_count, '%main:', pct_main,
